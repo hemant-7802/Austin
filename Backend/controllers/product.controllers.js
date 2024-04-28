@@ -126,40 +126,50 @@ export const createProductReview = async (req, res) => {
 
 // get all reviews of products
 export const getProductReviews = async (req, res) => {
-    const product = await Product.findById(req.query.id)
+    try {
+        const product = await Product.findById(req.query.id)
 
-    if (!product) {
-        return res.status(404).json({ Error: "Product Not Found" })
+        if (!product) {
+            return res.status(404).json({ Error: "Product Not Found" })
+        }
+
+        res.status(200).json({
+            reviews: product.reviews
+        })
+    } catch (error) {
+        console.log("Error in get product review controller", error.message)
+        res.status(500).json({ error: "Internal Server Error" })
     }
-
-    res.status(200).json({
-        reviews: product.reviews
-    })
 }
 
 // delete reviews
 export const deleteReview = async (req, res) => {
-    const product = await Product.findById(req.query.productId)
+    try {
+        const product = await Product.findById(req.query.productId)
 
-    if (!product) {
-        return res.status(404).json({ Error: "Product Not Found" })
+        if (!product) {
+            return res.status(404).json({ Error: "Product Not Found" })
+        }
+
+        const reviews = product.reviews.filter((rev) => { rev._id.toString() !== req.query.id.toString() })
+
+        let avg = 0
+        reviews.forEach((rev) => {
+            avg += rev.rating
+        })
+        const ratings = avg / reviews.length;
+
+        const numOfReviews = reviews.length
+
+        await Product.findByIdAndUpdate(req.query.productId, { reviews, ratings, numOfReviews }, {
+            new: true,
+            runValidators: true,
+            useFindAndModify: false
+        })
+
+        res.status(200).json({ message: "Product Delete Successfully" })
+    } catch (error) {
+        console.log("Error in delete product review controller", error.message)
+        res.status(500).json({ error: "Internal Server Error" })
     }
-
-    const reviews = product.reviews.filter(rev => rev._id.toString() !== req.query.id.toString())
-
-    let avg = 0
-    reviews.forEach((rev) => {
-        avg += rev.rating
-    })
-    const ratings = avg / reviews.length;
-
-    const numOfReviews = reviews.length
-
-    await Product.findByIdAndUpdate(req.query.productId, { reviews, ratings, numOfReviews }, {
-        new: true,
-        runValidators: true,
-        useFindAndModify: false
-    })
-
-    res.status(200).json({ message: "Product Delete Successfully" })
 }

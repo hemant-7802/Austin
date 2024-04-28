@@ -16,59 +16,58 @@ const orderSchema = new mongoose.Schema({
             quantity: { type: Number, required: true },
             image: { type: String, required: true },
             product: { type: mongoose.Schema.ObjectId, ref: "Product", required: true },
-            name: { type: String, required: true }
         }
     ],
-    user:{
-        type:mongoose.Schema.ObjectId,
-        ref:"user",
-        required:true
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: "user",
+        required: true
     },
-    paymentInfo:{
-        id:{
-            type:String,
-            required:true
+    paymentInfo: {
+        id: {
+            type: String,
+            required: true
         },
-        status:{
-            type:String,
-            required:true
+        status: {
+            type: String,
+            required: true
         }
     },
-    paidAt:{
-        type:Date,
-        required:true
+    paidAt: {
+        type: Date,
+        required: true
     },
-    itemsprice:{
-        type:Number,
-        required:true,
-        default:0
+    itemsprice: {
+        type: Number,
+        required: true,
+        default: 0
     },
-    taxPrice:{
-        type:Number,
-        required:true,
-        default:0
+    taxPrice: {
+        type: Number,
+        required: true,
+        default: 0
     },
-    shippingPrice:{
-        type:Number,
-        required:true,
-        default:0
+    shippingPrice: {
+        type: Number,
+        required: true,
+        default: 0
     },
-    totalPrice:{
-        type:Number,
-        required:true,
-        default:0
+    totalPrice: {
+        type: Number,
+        required: true,
+        default: 0
     },
-    orderStatus:{
-        type:String,
-        required:true,
-        default:"Processing"
+    orderStatus: {
+        type: String,
+        required: true,
+        default: "Processing"
     },
-    deliveredAt:Date,
-    createdAt:{
-        type:Date,
-        default:Date.now
+    deliveredAt: Date,
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
-})
+}, { timestamps: true })
 
 const Order = mongoose.model("Order", orderSchema)
 

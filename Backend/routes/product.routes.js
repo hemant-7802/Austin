@@ -4,8 +4,8 @@ import { authRoles, isAuthUser } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.route("/products").get(getAllproducts);
-router.route("/admin/product/new").post(isAuthUser, authRoles("admin"), createProduct)
+router.post("/admin/product/new", isAuthUser, authRoles("admin"), createProduct)
+router.get("/products", getAllproducts);
 router
     .route("/admin/product/:id")
     .put(isAuthUser, authRoles("admin"), updateProduct)

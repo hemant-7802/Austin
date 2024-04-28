@@ -75,7 +75,7 @@ const productScheme = mongoose.Schema({
         type: Date,
         default: Date.now
     },
-})
+}, { timestamps: true })
 
 const Product = mongoose.model("Product", productScheme)
 
