@@ -22,9 +22,6 @@ const sendEmail = async (opt) => {
         if (err) {
             console.log("Transporter error",err.message);
         }
-        else {
-            console.log('The email was sent successfully');
-        }
     })
 }
 
