@@ -1,41 +1,58 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import ProductCard from './ProductCard'
 import { CgMouse } from "react-icons/cg";
 import { useSelector, useDispatch } from "react-redux";
 import "./home.css"
 import MetaData from '../layouts/MetaData';
+import { getProduct } from '../../action/productAction';
+import Loader from '../layouts/loader/Loader';
+import toast from 'react-hot-toast';
 
-const products = [{
-  name: "tshirt",
-  _id: "asdai2",
-  price: "3000"
-}]
+// const product = [{
+//   name: "tshirt",
+//   _id: "he",
+//   price: "3000"
+// }]
 
 const Home = () => {
-  // const products = useSelector((state) => state.products);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProduct())
+  }, [dispatch])
+
+  const { products, loading, error, productsCount } = useSelector((state) => state.products);
+
   return (
     <Fragment>
-      <MetaData title="AUSTIN" />
+      {loading ? (
+        <Loader />
+      ) : (
+        <Fragment>
+          <MetaData title="AUSTIN" />
 
-      <div className="banner">
-        <p>Welcome to Ecommerce</p>
-        <h1>FIND AMAZING PRODUCTS BELOW</h1>
+          <div className="banner">
+            <p>Welcome to Ecommerce</p>
+            <h1>FIND AMAZING PRODUCTS BELOW</h1>
 
-        <a href="#container">
-          <button>
-            Scroll <CgMouse />
-          </button>
-        </a>
-      </div>
+            <a href="#container">
+              <button>
+                Scroll <CgMouse />
+              </button>
+            </a>
+          </div>
 
-      <h2 className="homeHeading">Featured Products</h2>
+          <h2 className="homeHeading">Featured Products</h2>
 
-      <div className="container" id="container">
-        {products &&
-          products.map((product) => (
-            <ProductCard key={product._id} product={product} />
-          ))}
-      </div>
+          <div className="container" id="container">
+            {products &&
+              products.map((product) => (
+                <ProductCard key={product._id} product={product} />
+              ))}
+          </div>
+        </Fragment>
+      )
+      }
     </Fragment>
   )
 }

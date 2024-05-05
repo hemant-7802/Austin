@@ -4,6 +4,7 @@ import Footer from './components/layouts/footer/Footer'
 import { Route, Routes } from 'react-router-dom'
 import Home from './components/home/Home'
 import WebFont from "webfontloader"
+import Toaster from "react-hot-toast"
 
 const App = () => {
 
@@ -22,6 +23,7 @@ const App = () => {
         <Route path='/' Component={Home} />
       </Routes>
       <Footer />
+      <Toaster />
     </>
   )
 }
