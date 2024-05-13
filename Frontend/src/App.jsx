@@ -4,7 +4,8 @@ import Footer from './components/layouts/footer/Footer'
 import { Route, Routes } from 'react-router-dom'
 import Home from './components/home/Home'
 import WebFont from "webfontloader"
-import Toaster from "react-hot-toast"
+import ProductDetails from './components/product/ProductDetails'
+import Product from './components/product/Products'
 
 const App = () => {
 
@@ -21,9 +22,10 @@ const App = () => {
       <Header />
       <Routes>
         <Route path='/' Component={Home} />
+        <Route path='/product/:id' Component={ProductDetails} />
+        <Route path='/products' Component={Product} />
       </Routes>
       <Footer />
-      <Toaster />
     </>
   )
 }

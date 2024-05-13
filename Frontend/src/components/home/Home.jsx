@@ -6,22 +6,16 @@ import "./home.css"
 import MetaData from '../layouts/MetaData';
 import { getProduct } from '../../action/productAction';
 import Loader from '../layouts/loader/Loader';
-import toast from 'react-hot-toast';
-
-// const product = [{
-//   name: "tshirt",
-//   _id: "he",
-//   price: "3000"
-// }]
 
 const Home = () => {
   const dispatch = useDispatch();
 
+  const { products, error } = useSelector((state) => state.products.products);
+  const { loading } = useSelector((state) => state.products)
+  
   useEffect(() => {
     dispatch(getProduct())
-  }, [dispatch])
-
-  const { products, loading, error, productsCount } = useSelector((state) => state.products);
+  }, [dispatch, error])
 
   return (
     <Fragment>

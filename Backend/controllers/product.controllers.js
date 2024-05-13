@@ -17,6 +17,7 @@ export const createProduct = async (req, res) => {
 export const getAllproducts = async (req, res) => {
     try {
         const resultPerPage = 10;
+        const productsCount = await Product.countDocuments();
 
         const apiFeature = new ApiFeature(Product.find(), req.query)
             .search()
@@ -24,7 +25,7 @@ export const getAllproducts = async (req, res) => {
             .pagination(resultPerPage)
         const products = await apiFeature.query;
 
-        res.status(200).json(products)
+        res.status(200).json({products, productsCount})
     } catch (error) {
         console.log("Error in get all product controller", error.message)
         res.status(500).json({ error: "Internal Server Error" })
@@ -34,14 +35,13 @@ export const getAllproducts = async (req, res) => {
 // get product details
 export const getProductDetails = async (req, res) => {
     try {
-        const productCount = await Product.countDocuments();
         const product = await Product.findById(req.params.id)
 
         if (!product) {
             return res.status(500).json({ message: "Product not found" })
         }
 
-        res.status(200).json({ product, productCount })
+        res.status(200).json({ product })
     } catch (error) {
         console.log("Error in get product detail controller", error.message)
         res.status(500).json({ error: "Internal Server Error" })

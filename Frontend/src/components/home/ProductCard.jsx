@@ -11,8 +11,7 @@ const ProductCard = ({ product }) => {
   return (
     <Link className="productCard" to={`/product/${product._id}`}>
       <img
-        // src={product.images[0].url} 
-        src="https://i.postimg.cc/3rg6KDk4/pexels-designecologist-1970139.jpg"
+        src={product.images[0].url} 
         alt={product.name} />
       <p>{product.name}</p>
       <div>
